@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Soumission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(90deg, #67B9D8, #004080); 
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"] {
+            width: calc(100% - 30px); /* 100% width minus padding */
+            padding: 10px;
+            margin: 5px 0 10px;
+            border: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #67B9D8;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #005080;
+        }
+
+        .remove-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: white;
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .remove-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #ff4c4c;
+        }
+
+        .error,
+        .success {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulaire de Soumission</h1>
+        <form id="submissionForm">
+            <label for="firstname">Prénom :</label>
+            <input type="text" id="firstname" name="firstname" required>
+
+            <label for="lastname">Nom :</label>
+            <input type="text" id="lastname" name="lastname" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <h2>Informations sur votre femme (facultatif)</h2>
+
+            <label for="wife_firstname">Prénom :</label>
+            <input type="text" id="wife_firstname" name="wife_firstname">
+
+            <label for="wife_lastname">Nom :</label>
+            <input type="text" id="wife_lastname" name="wife_lastname">
+
+            <label for="wife_email">Email :</label>
+            <input type="email" id="wife_email" name="wife_email">
+
+            <h2>Informations sur vos enfants (facultatif)</h2>
+
+            <div id="children-section" class="children-section">
+                <!-- Children inputs will be appended here -->
+            </div>
+
+            <button type="button" onclick="addChild()">Ajouter un enfant</button>
+
+            <div class="error" id="error-message"></div>
+            <div class="success" id="success-message"></div>
+            
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
+
+    <script>
+        function addChild() {
+            const section = document.getElementById('children-section');
+            const childDiv = document.createElement('div');
+            childDiv.classList.add('child');
+            
+            childDiv.innerHTML = `
+                <label>Prénom :</label>
+                <input type="text" name="child_firstname[]" required>
+                <label>Nom :</label>
+                <input type="text" name="child_lastname[]" required>
+                <label>Date de naissance :</label>
+                <input type="date" name="child_birthdate[]" required>
+                <button type="button" class="remove-button" onclick="removeChild(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm3 4h12v12H6V10zm4-8h4v2H7V2zm3 0h1v2h-1V2zm2 0h1v2h-1V2zM7 2h4v2H7V2z"/></svg>
+                </button>
+            `;
+            
+            section.appendChild(childDiv);
+        }
+
+        function removeChild(button) {
+            const childDiv = button.parentElement;
+            childDiv.remove();
+        }
+
+        function validateForm() {
+            const childrenBirthdates = document.getElementsByName('child_birthdate[]');
+            let canSubmit = true;
+
+            for (let i = 0; i < childrenBirthdates.length; i++) {
+                const age = calculateAge(childrenBirthdates[i].value);
+                if (age >= 21) {
+                    canSubmit = false;
+                    break;
+                }
+            }
+
+            if (canSubmit) {
+                const successMessage = document.getElementById('success-message');
+                successMessage.textContent = 'Merci d\'avoir répondu.';
+                setTimeout(function() {
+                    successMessage.textContent = '';
+                }, 3000); // Clear success message after 3 seconds
+
+                // You can submit the form here if all children are under 21
+            } else {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = 'Un ou plusieurs enfants ont plus de 21 ans.';
+                setTimeout(function() {
+                    errorMessage.textContent = '';
+                }, 3000); // Clear error message after 3 seconds
+            }
+        }
+
+        function calculateAge(birthdate) {
+            const today = new Date();
+            const birthDate = new Date(birthdate);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offres Omnidoc</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Ajoutez vos styles CSS ici */
+        body {
+            background: linear-gradient(90deg, #67B9D8, #004080);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .scroll-text {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #67B9D8, #004080);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            animation: scroll 5s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-link img {
+            height: 50px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px); /* Adjusted for the height of header and footer */
+            padding: 20px;
+        }
+
+        .offre {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+            color: #333; /* Darker text color for better contrast */
+        }
+
+        .offre h2 {
+            margin-top: 0;
+            color: #004080; /* Dark blue color for headings */
+        }
+
+        .offre .price {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #004080; /* Dark blue color for price */
+        }
+
+        .offre ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .offre ul li {
+            margin-bottom: 10px;
+        }
+
+        .offre .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #67B9D8;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .offre .btn:hover {
+            background-color: #004080;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <a href="acceuil.html" class="logo-link"><img src="omnidoc.png" alt="Omnidoc Logo" class="logo-image"></a>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="acceuil.html">Accueil</a></li>
+            <li><a href="Avis.html">Offres</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          <li><a href="tarif.html">Tarif</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="offre">
+        <h2>Premium</h2>
+        <p class="price">À partir de 29 DH/mois</p>
+        <ul class="advantages">
+            <li>Illimité ambulance pendant 1 an</li>
+            <li>Téléconsultations gratuites pendant 1 an</li>
+            <li>5 visites d'infirmière par an</li>
+            <li>Consultation à domicile à 150 DH</li>
+        </ul>
+        <a href="premium.html" class="btn">Choisir Premium</a>
+    </div>
+    
+    <div class="offre">
+        <h2>Premium +</h2>
+        <p class="price">À partir de 87 DH/mois</p>
+        <ul class="advantages">
+            <li>Illimité ambulance pendant 1 an</li>
+            <li>Téléconsultations gratuites pendant 1 an</li>
+            <li>10 visites à domicile par an</li>
+            <li>Consultation à domicile à 150 DH</li>
+        </ul>
+        <a href="Premium +.html" class="btn">Choisir Premium +</a>
+    </div>
+</div>
+
+<div class="scroll-text">
+    Profitez de nos meilleures offres sur Omnidoc
+</div>
+
+<script>
+    // JavaScript pour l'effet de défilement
+</script>
+
+</body>
+</html>

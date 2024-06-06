@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omnidoc - Avis et Suggestions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="cropped-omnidoc-removebg-preview-160x53.PNG" alt="Omnidoc Logo" class="logo">
+            <div class="contact-info">
+                <p>06 27 555 555</p>
+                <p>05 22 240 404</p>
+                <p>Email: <a href="mailto:DGA@omnidoc.ma">DGA@omnidoc.ma</a></p>
+            </div>
+        </div>
+        <h1>Omnidoc - Avis et Suggestions</h1>
+    </header>
+    <main>
+        <section class="form-section">
+            <h2>Laissez votre avis</h2>
+            <form id="reviewForm">
+                <label for="name">Nom prenom:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Avis:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">☆</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">☆</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">☆</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">☆</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">☆</label>
+                </div>
+                
+                <button type="submit">Soumettre</button>
+            </form>
+        </section>
+        <section class="reviews-section">
+            <h2>Avis des utilisateurs</h2>
+            <div id="reviews">
+                <!-- Les avis seront ajoutés ici -->
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewForm = document.getElementById('reviewForm');
+            const reviewSection = document.getElementById('reviews');
+            let storedReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+
+            function addReviewToPage(name, email, message, rating, index) {
+                const review = document.createElement('div');
+                review.className = 'review';
+                review.innerHTML = `
+                    <h3>${name}</h3>
+                    <p>Email: ${email}</p>
+                    <p>${message}</p>
+                    <p>Évaluation: ${rating} étoiles</p>
+                    <button class="delete-button" data-index="${index}">
+                        <svg class="trash-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M3 6h18v2H3V6zm2 4h14v12a2 2 0 01-2 2H7a2 2 0 01-2-2V10zm5-7h4v2H8V3h4zm6 0h4v2h-4V3z"/>
+                        </svg>
+                    </button>
+                `;
+                reviewSection.appendChild(review);
+
+                const deleteButton = review.querySelector('.delete-button');
+                deleteButton.addEventListener('click', function() {
+                    storedReviews.splice(index, 1);
+                    localStorage.setItem('reviews', JSON.stringify(storedReviews));
+                    review.remove();
+                    updateReviewIndices();
+                });
+            }
+
+            function updateReviewIndices() {
+                const deleteButtons = document.querySelectorAll('.delete-button');
+                deleteButtons.forEach((button, index) => {
+                    button.dataset.index = index;
+                });
+            }
+
+            storedReviews.forEach((review, index) => {
+                addReviewToPage(review.name, review.email, review.message, review.rating, index);
+            });
+
+            reviewForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const rating = document.querySelector('input[name="rating"]:checked').value;
+
+                const review = { name, email, message, rating };
+                storedReviews.push(review);
+                localStorage.setItem('reviews', JSON.stringify(storedReviews));
+
+                addReviewToPage(name, email, message, rating, storedReviews.length - 1);
+                reviewForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0099cc;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.header-left {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 150px; /* Augmente la taille de l'image */
+    height: auto;
+    margin-right: 1rem;
+}
+
+.contact-info {
+    text-align: left;
+}
+
+.contact-info p {
+    margin: 0.2rem 0;
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.form-section, .reviews-section {
+    width: 60%;
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    color: #0099cc;
+}
+
+label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:focus, textarea:focus {
+    border-color: #0099cc;
+    outline: none;
+}
+
+button {
+    background-color: #0099cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #006699;
+}
+
+.review {
+    background: #0099cc;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.review h3 {
+    margin: 0;
+    color: #333;
+}
+
+.review p{
+    position: relative; /* Position relative pour que le positionnement absolu de la poubelle soit basé sur cet élément */
+    display: flex; /* Utilisation de flexbox pour aligner les éléments horizontalement */
+    align-items: center; /* Alignement vertical des éléments */
+    background: #0099cc;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.delete-button {
+    position: absolute; /* Positionnement absolu pour la poubelle */
+    top: 0; /* Aligner la poubelle avec le haut de l'avis */
+    right: 0; /* Aligner la poubelle avec la droite de l'avis */
+    background: none;
+    border: none;
+    cursor: pointer;
+    fill: #ffffff;
+    transition: fill 0.3s;
+}
+
+.delete-button:hover .trash-icon {
+    fill: #ff0000;
+}
+
+.trash-icon {
+    width: 24px;
+    height: 24px;
+    pointer-events: none; /* Désactiver les événements de pointage sur l'icône pour éviter le focus */
+}
+
+/* Styles pour les étoiles d'évaluation */
+.rating {
+    display: flex; /* Afficher les étoiles horizontalement */
+    justify-content: center; /* Centrer les étoiles horizontalement */
+    list-style-type: none; /* Supprimer la liste par défaut */
+    padding: 0; /* Supprimer les marges internes */
+}
+
+.rating input {
+    display: none; /* Cacher les cases à cocher */
+}
+
+.rating label {
+    font-size: 24px; /* Taille des étoiles */
+    color: #ccc; /* Couleur par défaut */
+    cursor: pointer; /* Curseur pointeur */
+}
+
+.rating label:hover,
+.rating input:checked ~ label {
+    color: #f1c40f; /* Couleur des étoiles sélectionnées */
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omnidoc - Assistance Médicalisée</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(90deg, #67B9D8, #004080); 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .navbar a:hover {
+    color: #67B9D8;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .content h1 {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .media-section {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .media-section img,
+  .media-section video {
+    max-width: 100%;
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+
+  .marquee-container {
+    overflow: hidden;
+    background: linear-gradient(90deg, #67B9D8, #004080);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    color: white;
+  }
+  
+  .marquee {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 15s linear infinite;
+  }
+  
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+</style>
+</head>
+<body>
+<div class="navbar">
+  <a href="Omnidoc.html">Avis</a>
+  <a href="offre.html">Offre</a>
+  <a href="contact.html">Contact</a>
+  <a href="tarif.html">Tarif</a>
+</div>
+
+<div class="content">
+  <h1>Bienvenue chez Omnidoc</h1>
+</div>
+
+<div class="media-section">
+  <h2>Découvrez nos service</h2>
+ <img src="chemin/vers/omnidocA.jpg" alt="Description de l'image">
+
+
+  <video controls>
+    <source src="OMNIDOC.mp4" type="video/mp4">
+    
+  </video>
+</div>
+
+<div class="marquee-container">
+  <div class="marquee">
+    <p>Bienvenue chez Omnidoc, l'assistance médicalisée à portée de main</p>
+  </div>
+</div>
+
+</body>
+</html>

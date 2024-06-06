@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Tarif Ambulance</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e9f2f9;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #008CBA;
+            margin-bottom: 40px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #008CBA;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #005F6B;
+        }
+
+        #resultat {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #008CBA;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculateur de Tarif Ambulance</h1>
+    <form>
+        <label for="pointA">Point A :</label>
+        <select id="pointA" required>
+            <option value="Casablanca">Casablanca</option>
+            <option value="Rabat">Rabat</option>
+            <option value="Marrakech">Marrakech</option>
+            <option value="Fès">Fès</option>
+            <option value="Tanger">Tanger</option>
+            <option value="Agadir">Agadir</option>
+            <option value="Meknès">Meknès</option>
+            <option value="Oujda">Oujda</option>
+            <option value="Kenitra">Kenitra</option>
+            <option value="Tetouan">Tetouan</option>
+            <!-- Ajouter d'autres villes du Maroc ici -->
+        </select>
+        <label for="pointB">Point B :</label>
+        <select id="pointB" required>
+            <option value="Casablanca">Casablanca</option>
+            <option value="Rabat">Rabat</option>
+            <option value="Marrakech">Marrakech</option>
+            <option value="Fès">Fès</option>
+            <option value="Tanger">Tanger</option>
+            <option value="Agadir">Agadir</option>
+            <option value="Meknès">Meknès</option>
+            <option value="Oujda">Oujda</option>
+            <option value="Kenitra">Kenitra</option>
+            <option value="Tetouan">Tetouan</option>
+            <!-- Ajouter d'autres villes du Maroc ici -->
+        </select>
+        <label for="type">Type d'ambulance :</label>
+        <select id="type">
+            <option value="simple">Simple</option>
+            <option value="medicalisee">Médicalisée</option>
+        </select>
+        <div id="medical-options" style="display: none;">
+            <label>Avec :</label>
+            <input type="checkbox" id="urgentiste" name="personnel" value="urgentiste">
+            <label for="urgentiste">Urgentiste</label>
+            <input type="checkbox" id="reanimateur" name="personnel" value="reanimateur">
+            <label for="reanimateur">Réanimateur</label>
+            <input type="checkbox" id="infirmier" name="personnel" value="infirmier">
+            <label for="infirmier">Infirmier</label>
+        </div>
+        <button type="button" onclick="calculerTarif()">Calculer le tarif</button>
+        <p id="resultat"></p>
+    </form>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script>
+        function calculerTarif() {
+            const pointA = document.getElementById("pointA").value;
+            const pointB = document.getElementById("pointB").value;
+            const type = document.getElementById("type").value;
+            let tarif;
+
+            const service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [pointA],
+                destinations: [pointB],
+                travelMode: 'DRIVING'
+            }, function(response, status) {
+                if (status === 'OK') {
+                    const distance = response.rows[0].elements[0].distance.value / 1000; // distance in km
+
+                    if (type === "simple") {
+                        if (distance <= 25) {
+                            tarif = distance * 30;
+                        } else if (distance <= 35) {
+                            tarif = distance * 29;
+                        } else if (distance <= 50) {
+                            tarif = distance * 27;
+                        } else if (distance <= 80) {
+                            tarif = distance * 20;
+                        } else if (distance <= 100) {
+                            tarif = distance * 14;
+                        } else if (distance <= 500) {
+                           tarif = distance * 10;
+                        } else if (distance <= 1000) {
+                            tarif = distance * 8;
+                        } else {
+                            tarif = distance * 7;
+                        }
+                    } else if (type === "medicalisee") {
+                        const personnel = Array.from(document.querySelectorAll('input[name="personnel"]:checked')).map(checkbox => checkbox.value);
+                        if (distance <= 25) {
+                            tarif = distance * 32;
+                        } else if (distance <= 35) {
+                            tarif = distance * 31;
+                        } else if (distance <= 50) {
+                            tarif = distance * 29;
+                        } else if (distance <= 80) {
+                            tarif = distance * 22;
+                        } else if (distance <= 100) {
+                            tarif = distance * 16;
+                        } else if (distance <= 500) {
+                            tarif = distance * 12;
+                        } else if (distance <= 1000) {
+                            tarif = distance * 10;
+                        } else {
+                            tarif = distance * 8;
+                        }
+
+                        personnel.forEach(function(membre) {
+                            if (membre === "urgentiste") {
+                                if (distance <= 25) {
+                                    tarif += 500;
+                                } else if (distance <= 35) {
+                                    tarif += 500;
+                                } else if (distance <= 50) {
+                                    tarif += 500;
+                                } else if (distance <= 80) {
+                                    tarif += 500;
+                                } else if (distance <= 100) {
+                                    tarif += 700;
+                                } else if (distance <= 500) {
+                                    tarif += 1000;
+                                } else if (distance <= 1000) {
+                                    tarif += 1600;
+                                } else {
+                                    tarif += 2300;
+                                }
+                            } else if (membre === "reanimateur") {
+                                if (distance <= 25) {
+                                    tarif += 800;
+                                } else if (distance <= 35) {
+                                    tarif += 800;
+                                } else if (distance <= 50) {
+                                    tarif += 800;
+                                } else if (distance <= 80) {
+                                    tarif += 800;
+                                } else if (distance <= 100) {
+                                    tarif += 800;
+                                } else if (distance <= 500) {
+                                    tarif += 1500;
+                                } else if (distance <= 1000) {
+                                    tarif += 2000;
+                                } else {
+                                    tarif += 4000;
+                                }
+                            } else if (membre === "infirmier") {
+                                if (distance <= 25) {
+                                    tarif += 200;
+                                } else if (distance <= 35) {
+                                    tarif += 200;
+                                } else if (distance <= 50) {
+                                    tarif += 200;
+                                } else if (distance <= 80) {
+                                    tarif += 200;
+                                } else if (distance <= 100) {
+                                    tarif += 200;
+                                } else if (distance <= 500) {
+                                    tarif += 400;
+                                } else if (distance <= 1000) {
+                                    tarif += 600;
+                                } else {
+                                    tarif += 1000;
+                                 });
+                    }
+
+                    document.getElementById("resultat").innerHTML = "Le tarif pour le trajet entre " + pointA + " et " + pointB + " avec une ambulance " + type + " est de " + tarif + " MAD.";
+                } else {
+                    alert('Erreur de calcul de distance. Veuillez vérifier les villes sélectionnées.');
+                }
+            });
+        }
+
+        document.getElementById("type").addEventListener("change", function() {
+            const medicalOptions = document.getElementById("medical-options");
+            if (this.value === "medicalisee") {
+                medicalOptions.style.display = "block";
+            } else {
+                medicalOptions.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
